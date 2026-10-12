@@ -1,0 +1,7 @@
+include AGENTS.md CONTRIBUTORS.md PLAN.md SECURITY.md SPEC.md WORKLOG.md requirements.txt
+include bin/bridge
+recursive-include integrations *.md
+recursive-include docs *.md *.json
+recursive-include scripts *.py
+recursive-include tests *.py
+recursive-include .github *.yml

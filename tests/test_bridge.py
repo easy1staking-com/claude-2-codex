@@ -1,5 +1,4 @@
 import json
-import os
 import socket
 import tempfile
 import unittest
@@ -23,11 +22,17 @@ class ClaudeIdentityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "sessions").mkdir()
-            (root / "sessions/123.json").write_text(json.dumps({
-                "sessionId": "wanted", "pid": 123, "peerProtocol": 1, "procStart": "old"
-            }))
-            with patch.object(claude, "discover", return_value=[{"pid": 123, "sessionId": "wanted"}]), \
-                    patch.object(claude, "process_start", return_value="new"):
+            (root / "sessions/123.json").write_text(
+                json.dumps(
+                    {"sessionId": "wanted", "pid": 123, "peerProtocol": 1, "procStart": "old"}
+                )
+            )
+            with (
+                patch.object(
+                    claude, "discover", return_value=[{"pid": 123, "sessionId": "wanted"}]
+                ),
+                patch.object(claude, "process_start", return_value="new"),
+            ):
                 with self.assertRaisesRegex(ValueError, "incarnation"):
                     claude.resolve_session("wanted", root)
 
@@ -55,7 +60,10 @@ class ClaudeFramingTests(unittest.TestCase):
             writer.close()
 
     def test_multiple_frames_and_unicode_cross_real_socket(self):
-        data = [{"type": "auth", "token": "test-only"}, {"type": "user", "message": {"content": "ciao 👋"}}]
+        data = [
+            {"type": "auth", "token": "test-only"},
+            {"type": "user", "message": {"content": "ciao 👋"}},
+        ]
         payload = "".join(json.dumps(frame) + "\n" for frame in data).encode()
         self.assertEqual(self.frames(payload), data)
 
@@ -66,33 +74,58 @@ class ClaudeFramingTests(unittest.TestCase):
     def test_oversized_frame_is_rejected(self):
         with patch.object(claude, "MAX_FRAME", 32):
             with self.assertRaises(ValueError):
-                self.frames(b'{"content":"' + b'x' * 40 + b'"}\n')
+                self.frames(b'{"content":"' + b"x" * 40 + b'"}\n')
 
 
 class CodexRoutingTests(unittest.TestCase):
     def client(self, turns, loaded=True):
         client = object.__new__(CodexClient)
+        client.path = Path("/tmp/test-codex.sock")
+        client.timeout = 1
         client.loaded_ids = lambda: ["wanted"] if loaded else []
         client.read = lambda thread_id, include_turns=False: {"turns": turns}
         calls = []
-        def call(method, params):
+
+        def call(method, params, before_write=None):
+            if before_write is not None:
+                before_write()
             calls.append((method, params))
+            if method == "thread/turns/list":
+                return {"data": turns}
             return {"turnId": "turn"}
+
         client.call = call
         return client, calls
 
     def test_busy_thread_uses_expected_turn_and_preserves_permissions(self):
         client, calls = self.client([{"id": "active", "status": "inProgress"}])
         client.forward("wanted", "peer text", "unique-id")
-        method, params = calls[0]
+        self.assertEqual(calls[0][1]["itemsView"], "notLoaded")
+        method, params = calls[1]
         self.assertEqual(method, "turn/steer")
         self.assertEqual(params["expectedTurnId"], "active")
-        self.assertEqual(set(params), {"threadId", "input", "clientUserMessageId", "expectedTurnId"})
+        self.assertEqual(
+            set(params), {"threadId", "input", "clientUserMessageId", "expectedTurnId"}
+        )
 
-    def test_idle_thread_starts_turn_without_resuming_replacement(self):
+    def test_idle_thread_queues_without_owning_turn_or_overriding_permissions(self):
         client, calls = self.client([{"id": "old", "status": "completed"}])
-        client.forward("wanted", "peer text", "unique-id")
-        self.assertEqual(calls[0][0], "turn/start")
+        with patch("claude_codex_bridge.codex.subprocess.run") as run:
+            result = client.forward("wanted", "peer text", "unique-id")
+        self.assertEqual(result["method"], "codex/queue")
+        self.assertEqual(
+            run.call_args.args[0],
+            [
+                "codex",
+                "queue",
+                "--remote",
+                "unix:///tmp/test-codex.sock",
+                "--thread",
+                "wanted",
+                "--message=peer text",
+            ],
+        )
+        self.assertNotIn("turn/start", [call[0] for call in calls])
 
     def test_unloaded_thread_is_not_contacted(self):
         client, calls = self.client([], loaded=False)

@@ -11,6 +11,8 @@ Never promote a reported or inferred capability into a verified requirement.
 
 - [Session discovery and native messaging](session-discovery.md)
 - [First bidirectional handshake](live-handshake.md)
+- [Product architecture, live initiation, and remaining gates](productization.md)
+- [Independent adversarial cases and corrections](adversarial-cases.md)
 - [Claude's independent review and resulting open questions](claude-review.md)
 
 Keep credentials out of all captures. Live IDs and process IDs describe a dated

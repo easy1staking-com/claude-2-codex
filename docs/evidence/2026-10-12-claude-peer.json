@@ -2,7 +2,6 @@
   "pid": 910001,
   "sessionId": "cd36c3eb-a835-54d9-bb3d-e68e57304e82",
   "cwd": "<project-root>",
-  "startedAt": 1791839811785,
   "procStart": "PROCESS_START",
   "version": "2.1.296",
   "peerProtocol": 1,
@@ -14,13 +13,9 @@
   "kind": "interactive",
   "entrypoint": "cli",
   "pidDomain": "linux:BOOT_ID:pid:[NAMESPACE]",
-  "tmux": "0:@38.%61",
   "messagingSocketPath": "/run/user/UID/cc-socks/910001.sock",
   "name": "claude-2-codex-f6",
   "nameSource": "derived",
-  "nameSince": 1791839811785,
   "status": "idle",
-  "updatedAt": 1791841512374,
-  "statusUpdatedAt": 1791841512374,
   "publication_note": "Redacted public record: identifiers and host coordinates are substituted consistently; raw observations remain private. Example IDs must not be used for routing."
 }

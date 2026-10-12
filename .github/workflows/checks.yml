@@ -1,0 +1,48 @@
+name: checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install '.[dev]'
+      - run: ruff check src tests scripts
+      - run: ruff format --check src tests scripts
+      - run: python scripts/run_tests.py
+      - run: python scripts/verify_evidence.py
+      - run: python scripts/check_publication.py
+      - run: python -m build
+      - run: python scripts/verify_wheel.py dist/*.whl
+      - name: Install and test the built wheel outside the checkout
+        run: |
+          python -m venv /tmp/wheel-check
+          /tmp/wheel-check/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/wheel-check/bin/agent-bridge --version
+          /tmp/wheel-check/bin/python "$GITHUB_WORKSPACE/scripts/run_tests.py" --test-dir "$GITHUB_WORKSPACE/tests"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-dist-${{ matrix.python }}
+          path: dist/*
+  standalone:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install '.[standalone]'
+      - run: pyinstaller --onefile --name agent-bridge --paths src --specpath build scripts/standalone_entry.py
+      - run: dist/agent-bridge --version && dist/agent-bridge --help
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent-bridge-linux-x86_64
+          path: dist/agent-bridge

@@ -12,8 +12,11 @@ documents = list((root / "docs/knowledge").glob("*.md"))
 findings = root / "CLAUDE_FINDINGS.md"
 if findings.exists():
     documents.append(findings)
-unknown = [(str(path.relative_to(root)), value) for path in documents
-           for value in set(pattern.findall(path.read_text())) - known]
+unknown = [
+    (str(path.relative_to(root)), value)
+    for path in documents
+    for value in set(pattern.findall(path.read_text())) - known
+]
 if unknown:
     raise SystemExit(f"Documentation contains identifiers absent from captures: {unknown}")
 capture = json.loads((root / "docs/evidence/2026-10-12-handshake.json").read_text())

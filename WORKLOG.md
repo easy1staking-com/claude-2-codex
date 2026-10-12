@@ -61,3 +61,49 @@
   `python3 scripts/verify_evidence.py` checks documented UUIDs against captures
   and validates nonce/reply/turn consistency. This check passed; it is evidence
   consistency verification, not a new live delivery test.
+
+## 2026-10-12 — reusable alpha and adversarial integration
+
+- Published the initial public repository at
+  `https://github.com/easy1staking-com/claude-2-codex` (initial commit `d1ca126`).
+  Added `PLAN.md` with explicit file ownership, bounded mutual review, release
+  gates, and actual contribution credit. Claude acknowledged the split and the
+  amendment assigning it the repo-local Claude skill; Codex owns the Codex snippet.
+- Claude completed two independent adversarial reviews and 56 negative cases.
+  Codex evaluated each remedy and challenged test validity. Corrections and
+  dispositions are preserved in the review and knowledge directories.
+- Added the typed public facade, symmetric send/discovery CLI, installable wheel,
+  source archive, optional bundled executable, CI, and integration instructions.
+  Direct initiation works without a native return inbox; private route discovery
+  and native reply were observed separately. No global skill installation occurred.
+- Replaced full-history reads with metadata pagination and fresh bounded RPC
+  connections. Removed bridge-owned idle turns; native queue acceptance is a
+  distinct receipt with no wake-up guarantee. Added ID/phase-aware failures,
+  durable deduplication/outcomes, native queue IDs, explicit reply routes, bounded
+  failure notices, and safe framing. Peer input cannot authorize tools.
+- Repaired predictable `/tmp` lock preemption using private per-user runtime
+  locks independent of state override. Serialized legacy journal migration.
+  Claude reproduced loss of accepted status when journaling failed; retained the
+  accepted receipt with `journal_error` instead. CLI log failure likewise preserves
+  the accepted receipt and omits bodies. Modern inspection skips migration locks.
+- Follow-up publication check removes residual pane/epoch metadata missed in the
+  initial redaction. No credentials were exposed. Raw evidence and runtime state
+  remain ignored and private; public document/integration checks pass.
+- Final source suite: **91 tests pass, no expected failures**. Clean wheel
+  installation under `/tmp`, tested outside the checkout with no source PYTHONPATH:
+  **91 tests pass**. Verified all eight shipped package files byte-for-byte against
+  source and against the installed artifact. Ruff lint/format and evidence checks
+  pass. Claude skill frontmatter validates.
+- Final local bundled executable: version/help and host discovery succeed; both
+  selected sessions found with no provider errors. At **22:33 UTC**, that binary
+  both served the private inbox and sent `FINAL-ARTIFACT-01`. Claude rediscovered
+  the exact route and sent one native reply; Codex actually observed it. Private
+  artifact hashes, receipt and event log retained locally.
+- The local executable uses Python 3.14.4 and glibc 2.43. CI's distribution builder
+  uses Ubuntu 22.04; do not publish the local binary as universally compatible.
+  CI includes Python 3.11/3.14 source and clean-wheel checks, strict test counting,
+  package-byte verification, and standalone version/help checks.
+- Remaining stable-release gates: actual native idle queue drain/agent observation
+  and a pending-approval/disconnect experiment. Claude reports the older queued
+  items still pending at 22:23 while this turn stays busy. End this turn before
+  measuring idle consumption; stale queued questions are not new requirements.

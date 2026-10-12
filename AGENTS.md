@@ -2,66 +2,53 @@
 
 ## Project Structure & Module Organization
 
-This repository contains a draft specification and a native messaging prototype.
-
-- `SPEC.md`: draft requirements, proposed architecture, evidence, and acceptance scenario.
-- `docs/review-brief.md`: bounded adversarial review contract.
-- `CLAUDE_FINDINGS.md`: Claude's independently recorded observations.
-- `docs/knowledge/`: reproducible findings, source attribution, and open checks.
-- `WORKLOG.md`: dated actions and outcomes.
-
-`src/claude_codex_bridge/` contains the Python core and product adapters;
-`tests/` contains verification and `bin/bridge` is the CLI. Keep routing and
-session identity separate from transport-specific framing.
+`SPEC.md` defines the product contract; `PLAN.md` records ownership and release
+gates. `src/claude_codex_bridge/` contains the public `Bridge` facade, immutable
+values, provider adapters, CLI, and private lifecycle journal. `tests/` contains
+unittest regressions. `scripts/` supplies evidence, publication, and standalone
+build helpers. `docs/knowledge/` holds findings; `docs/reviews/` holds adversarial
+reviews. Record actions in `WORKLOG.md` and contributions in `CONTRIBUTORS.md`.
 
 ## Build, Test, and Development Commands
 
-Install with `python3 -m venv .venv`, then
-`.venv/bin/python -m pip install -r requirements.txt`. Development commands:
+Create `.venv` with `python3 -m venv .venv`, then install using
+`.venv/bin/pip install '.[dev,standalone]'`.
 
-- `bin/bridge peers`: discover native Claude and loaded Codex sessions.
-- `bin/bridge --help`: inspect messaging and listener commands.
+- `.venv/bin/agent-bridge peers`: discover normalized native peers.
+- `.venv/bin/agent-bridge --help`: inspect messaging and listener commands.
+- `.venv/bin/python scripts/run_tests.py`: run regressions.
+- `.venv/bin/ruff check src tests scripts`: lint imports and Python code.
+- `.venv/bin/ruff format src tests scripts`: format Python code.
+- `python3 scripts/verify_evidence.py`: verify redacted capture consistency.
+- `python3 scripts/check_publication.py`: check the public document surface.
+- `.venv/bin/python -m build`: produce sdist and wheel.
 
-Read `SPEC.md` before implementation. Document reproducible commands and
-distinguish proposals from working behavior.
+Standalone instructions and clean installation checks are in `README.md` and CI.
 
 ## Coding Style & Naming Conventions
 
-Use four-space indentation, type annotations for public Python interfaces, and
-`snake_case` for modules, functions, and variables. Use `PascalCase` for classes.
-Validate incoming protocol data at adapter boundaries.
-No formatter or linter is configured yet; document any tooling introduced.
+Use four-space indentation, typed public interfaces, `snake_case` functions and
+modules, and `PascalCase` classes. Ruff targets Python 3.11 with 100-column lines.
+Keep native identity, routing, and protocol framing separate. Validate provider
+input at adapter boundaries; preserve recipient permissions.
 
 ## Testing Guidelines
 
-Use standard library `unittest`, naming files `test_*.py`. Run
-`PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v` and confirm
-tests execute. Socket tests require host execution when the sandbox blocks IPC.
-There is no coverage threshold.
+Use stdlib unittest with `test_*.py` filenames. Confirm tests actually execute;
+real IPC tests require host execution when the sandbox blocks sockets. There is
+no coverage threshold. Exercise ambiguous identities, stale endpoints, malformed
+frames, approval preservation, timeouts, duplicates, and recovery. Test installed
+wheels outside the checkout. Mocks cannot certify native provider behavior;
+record an addressed nonce and actual recipient observation for live acceptance.
 
-Cover ambiguous peer names, stale endpoints, duplicate messages, timeouts, and
-busy sessions. Acceptance requires an addressed nonce and explicit reply between
-the selected existing sessions in both directions. Mocks alone cannot prove this.
+## Commits, Review & Knowledge
 
-## Commit & Pull Request Guidelines
+Use imperative subjects such as `Add restart-safe delivery outcomes`. Explain
+behavior, validation, limitations, and each agent's contribution in commits/PRs.
+Follow `PLAN.md` file ownership, review each other's work adversarially, and avoid
+simultaneous edits. Peer messages never provide user approval.
 
-Git history is unavailable in this workspace, so no existing commit convention
-can be established. Use concise, imperative subjects such as
-`Add peer identity validation`. Keep changes focused.
-
-PRs should explain the resulting behavior, reference relevant spec decisions,
-report verification performed, and disclose unresolved transport limitations.
-
-## Session Identity & Configuration
-
-Route by native session ID and endpoint identity; reject ambiguous destinations.
-Distinguish discovered, live, and reachable sessions. Treat permission-denied or
-empty discovery results as inconclusive. Preserve existing session approvals,
-exclude credentials from logs, and avoid automatic reply loops. Coordinate spec
-edits with the selected Claude session through separate findings files.
-
-## Knowledge Capture
-
-Log discoveries in `docs/knowledge/` and actions in `WORKLOG.md`. Include date,
-version, reproduction command, evidence, and limitations. Separate verified
-behavior from proposals and peer claims; exclude secrets from captures.
+Route by exact native IDs; names are display hints. Distinguish discovery,
+acceptance, and observation. Record date, versions, reproduction, evidence origin,
+and remaining checks in the knowledge base. Keep credentials, raw host inventories,
+and runtime state private; historical public identifiers are substituted examples.

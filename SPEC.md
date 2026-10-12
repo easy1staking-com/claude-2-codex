@@ -1,7 +1,8 @@
 # Claude–Codex bridge product contract
 
 Status: 0.1.0a1 alpha contract; two adversarial passes completed. Stable release
-remains gated on native idle delivery and pending-approval behavior.
+remains gated on native pending-approval behavior. Selected-session idle queue
+consumption has now been observed; other consumer configurations remain unmeasured.
 
 ## Purpose and scope
 
@@ -118,9 +119,10 @@ steer rejection remains terminal; no implicit queue fallback is performed.
 
 The original prototype's bidirectional handshake is verified on Claude Code
 2.1.296 and Codex 0.162.1, dated 2026-10-12. Public captures use substituted IDs.
-Further packaging and lifecycle behavior require their own tests. Idle Codex
-queue draining, native held/refused receipts, additional OSes, and other provider
-versions are not yet live-verified. Never market unmeasured paths as certified.
+Further packaging and lifecycle behavior require their own tests. Selected-session native idle queue consumption was observed at 22:37 UTC after
+the active turn ended. That does not establish daemon-only wake-up, FIFO ordering
+or a delivery deadline. Pending-approval/disconnect behavior, native held/refused
+receipts, additional OSes, and other provider versions are not yet live-verified. Never market unmeasured paths as certified.
 
 ## Language decision — 2026-10-12
 

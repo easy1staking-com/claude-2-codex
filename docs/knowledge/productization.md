@@ -77,3 +77,26 @@ eight package files match the source and installed artifact byte-for-byte.
 Version/help succeeded for both distributions. The local binary inherits glibc
 2.43, whereas CI targets an Ubuntu 22.04 builder. Other provider versions and
 operating systems remain unmeasured.
+
+## Native idle queue consumption — 22:37 UTC
+
+VERIFIED: after Codex ended its previous turn, the first older Claude submission
+from 21:53 arrived as the next user input. Codex actually read its content,
+recognized the already settled repository/language questions and did not reopen
+them. A read-only queue query at 22:37 UTC compared IDs with the private pre-idle
+snapshot: the first row was gone and the second remained pending. This closes
+the selected-session observation gate. Approximate wait was 44 minutes while
+Codex stayed busy.
+
+The deciding witness is agent observation; disappearance of a database row alone
+would not prove receipt. No claim is made about a daemon without an attached
+consumer, guaranteed wake-up/drain time, consumption of every item at once, or
+ordering against steers. Pending-approval/disconnect behavior remains open.
+Private snapshots retain actual IDs; public documentation uses no routing IDs.
+
+CLAUDE-REPORTED INDEPENDENT CORROBORATION, 22:38 UTC: a read-only rollout
+inspection found the first submitted text as a user response item timestamped
+22:37:19.849 UTC. Only the second queue row remained. This agrees with Codex’s
+actual receipt and private queue snapshots. One-item-per-idle behavior and FIFO
+by queue order remain hypotheses; multiple queued messages may wait behind
+earlier items without any delivery deadline.

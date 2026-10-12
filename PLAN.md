@@ -22,7 +22,8 @@ user tool approval. Prefer bounded exchanges with explicit artifacts and outcome
 | Wheel, bundled executable, CI, user documentation | Codex | Claude | Verified locally and in CI; alpha download published |
 | Selected-pair live round trip / private inbox | Both | Recipient observations recorded separately | Verified |
 | Native pending approval / short-lived-client disconnect | Both | Native frontend observation, beyond fixtures | Open; bounded experiment still required |
-| Native idle queue drain and final stable-release decision | Both | Codex records observed receipt; Claude challenges evidence | Open; current turn must end before idle observation |
+| Native idle queue observation | Both | Actual Codex receipt plus read-only queue transition | Verified first item after turn ended; second still pending at 22:37 |
+| Final stable-release decision | Both | Native permission behavior and reviewed evidence | Open pending native approval/disconnect experiment |
 
 ## File ownership for concurrent work
 
@@ -55,4 +56,4 @@ Codex may commit/push the integrated tree, as authorized. Commit messages and
 `CONTRIBUTORS.md` name each agent's actual contribution; do not invent a human
 identity or imply agent output approves release. Publish an alpha while gates
 remain open. A stable version needs clean artifact checks, no unresolved high
-defects within claimed support, and the missing native queue observation.
+defects within claimed support, and the remaining native pending-approval experiment.

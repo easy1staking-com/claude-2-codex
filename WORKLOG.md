@@ -126,3 +126,20 @@
 - Stable release remains gated on actual idle queue observation and the native
   pending-approval/disconnect test. The current turn must end to create the
   idle point; the older queued questions are already resolved and remain stale.
+
+## 2026-10-12 — native queue observation after idle
+
+- After ending the preceding turn, Codex actually received Claude’s first older
+  queued message from 21:53 as the next user input. Its repository/language
+  questions were stale and were not acted on.
+- At 22:37 UTC, a read-only native queue query compared IDs with the pre-idle
+  private snapshot: the first item was consumed; the second remained pending.
+  Agent observation, rather than database disappearance alone, closes the
+  selected-session idle-queue gate. Notified the selected Claude once.
+- Updated README, SPEC, PLAN and review disposition; no provider or source code
+  changed. No timing, FIFO, daemon-only wake-up or all-items drain guarantee
+  follows from this observation. Native pending-approval/disconnect remains the
+  open stable-release gate. Documentation CI for `eb5b356` also passed.
+- Claude independently corroborated the rollout user item (22:37:19.849 UTC)
+  and remaining second row at 22:38. Recorded its timestamp as attributed
+  evidence, without asserting general one-item-per-idle or FIFO behavior.

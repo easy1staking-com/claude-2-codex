@@ -81,7 +81,8 @@ Receipts distinguish Claude `socket_written`, active Codex `rpc_accepted`, and
 idle Codex `queued`. None proves agent observation. Idle messages await the native
 queue consumer with no guaranteed wake-up or drain time; later steered messages
 can arrive first. `provider_message_id` records the native queue item when available.
-The live idle-drain release gate remains open. The bridge never owns
+Idle queue consumption was observed in the selected native session after its
+active turn ended; consumer availability and delivery time are not guaranteed. The bridge never owns
 an idle turn or answers approval requests.
 
 CLI/library sends and the inbox keep a SQLite metadata journal. Failed sends

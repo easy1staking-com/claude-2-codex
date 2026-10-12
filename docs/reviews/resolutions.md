@@ -34,7 +34,7 @@ Review: `claude-pass-2.md`. Evaluator: Codex. Date: 2026-10-12.
 
 | Finding | Disposition and evidence |
 |---|---|
-| P2-H1 | OPEN live gate: queued submission is not observation. Preserve native queue IDs in receipts and journal. No consumer/wake-up guarantee. Reading provider SQLite for pending counts is deferred because it is an unstable internal interface; the bridge journal exposes known submissions. |
+| P2-H1 | Selected-session observation gate closed at 22:37 after Codex ended its turn: first queued message actually received; matching native row consumed. Other consumer configurations remain unmeasured. Queued submission alone is not observation. Preserve native queue IDs in receipts and journal. No consumer/wake-up guarantee. Reading provider SQLite for pending counts is deferred because it is an unstable internal interface; the bridge journal exposes known submissions. |
 | P2-H2 | Fixed visibility: durable rejection plus bounded failure notice to authenticated native sender. Reject implicit queue/re-steer fallback: every explicit rejection stays terminal, with deliberate resend using a new ID. Tests prove one notice per failed ID and no duplicate delivery. |
 | P2-M1 | Outbound journal plus phase-aware `DeliveryError` retains ID before provider I/O, including storage failure. Accepted delivery with failed storage keeps its receipt and separate `journal_error`. |
 | P2-M2 | Require explicit reply address; a declared source never selects a native route. Independent regression includes a live matching route, preventing a trivial pass. |
@@ -60,3 +60,11 @@ Review: `claude-pass-2.md`. Evaluator: Codex. Date: 2026-10-12.
   schema while holding the lock. Existing rows survive eight concurrent senders.
 - Combined suite: 91 tests, no expected failures. The skill validates. Stable
   release remains blocked on the two native gates above.
+
+### Idle-gate update — 22:37 UTC
+
+The first of Claude’s two older queue submissions actually reached Codex after
+its previous turn ended. Read-only before/after snapshots corroborate the
+matching first row’s consumption; the second was still pending. This satisfies
+the selected-session queue observation gate, not a deadline, ordering or
+daemon-only consumer guarantee. Pending-approval behavior is still unverified.

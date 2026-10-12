@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-12",
+  "scope": "Selected existing local sessions; nonce reply and Codex active-turn delivery",
+  "product_versions": {
+    "claude": "2.1.296",
+    "codex": "0.162.1",
+    "websockets": "17.1"
+  },
+  "codex_agent_observed_reply": true,
+  "events": [
+    {
+      "time": "2026-10-12T21:42:26.294841+00:00",
+      "event": "listening",
+      "address": "uds:/run/user/UID/cc-socks/910002.sock",
+      "bridge_pid": 910002,
+      "claude_session": "cd36c3eb-a835-54d9-bb3d-e68e57304e82",
+      "claude_pid": 910001,
+      "codex_thread": "efb3a37d-8679-51ed-ae10-b314105a825a",
+      "codex_name": "Build cross-platform socket bridge",
+      "nonce": "ccd47c81-4d22-56b0-8adf-adc46dbd5d83"
+    },
+    {
+      "time": "2026-10-12T21:42:26.408079+00:00",
+      "event": "socket_write",
+      "message_id": "d1aa3b7b-8776-59b1-b40b-3c9d934e4274",
+      "nonce": "ccd47c81-4d22-56b0-8adf-adc46dbd5d83",
+      "destination": "cd36c3eb-a835-54d9-bb3d-e68e57304e82",
+      "delivery": "not_yet_confirmed"
+    },
+    {
+      "time": "2026-10-12T21:42:36.829371+00:00",
+      "event": "claude_reply",
+      "message_id": "8ebf6a77-0d6b-558d-aa7d-7fbbeb0308dd",
+      "body": "<cross-session-message from=\"uds:/run/user/UID/cc-socks/910001.sock\" hop-chain=\"HOP_CHAIN\" from-name=\"claude-2-codex-f6\" from-mode=\"prompting\">\nConfirmed receipt from the Claude Code session. nonce=ccd47c81-4d22-56b0-8adf-adc46dbd5d83 claude_session_id=cd36c3eb-a835-54d9-bb3d-e68e57304e82. Next I'll read SPEC.md and write my findings to CLAUDE_FINDINGS.md. I won't touch any other files and I won't auto-reply in a loop.\n</cross-session-message>",
+      "nonce_present": true,
+      "source_session": "cd36c3eb-a835-54d9-bb3d-e68e57304e82"
+    },
+    {
+      "time": "2026-10-12T21:42:36.844242+00:00",
+      "event": "codex_accepted",
+      "message_id": "8ebf6a77-0d6b-558d-aa7d-7fbbeb0308dd",
+      "method": "turn/steer",
+      "turn_id": "44cc8a2e-3a0e-58d5-908a-339b3db32967"
+    }
+  ],
+  "artifact_sha256": {
+    "src/claude_codex_bridge/__init__.py": "0a008762afd0cabff69ee18ef167501a3dbeb44f5cfeebff12816738f79b49f6",
+    "src/claude_codex_bridge/__main__.py": "e892694be6dbec951ae993ec8eb8e24fcea5d1146f5d98d63feba056f4a25cfa",
+    "src/claude_codex_bridge/claude.py": "960ea13915e94380dd37307ea7402c518742103718155f34ef8a1eac95370c67",
+    "src/claude_codex_bridge/codex.py": "b122eadfd91f4ece3dce20fb75a7f50a96015665ed764feb54a7ce28fdfe77d8"
+  },
+  "source_snapshot_note": "Hashes describe source at capture time, after adding send-command journaling. The first listener loaded __main__.py immediately before that journaling-only change.",
+  "publication_note": "Redacted public record: identifiers and host coordinates are substituted consistently; raw observations remain private. Example IDs must not be used for routing."
+}

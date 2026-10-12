@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-10-12T21:46:08.765619+00:00",
+  "peers": [
+    {
+      "product": "claude",
+      "pid": 910001,
+      "cwd": "<project-root>",
+      "kind": "interactive",
+      "startedAt": 1791839811785,
+      "sessionId": "cd36c3eb-a835-54d9-bb3d-e68e57304e82",
+      "name": "claude-2-codex-f6",
+      "status": "idle"
+    },
+    {
+      "product": "codex",
+      "session_id": "efb3a37d-8679-51ed-ae10-b314105a825a",
+      "name": "Build cross-platform socket bridge",
+      "cwd": "<project-root>",
+      "status": {
+        "type": "active",
+        "activeFlags": []
+      },
+      "version": "0.162.1"
+    }
+  ],
+  "publication_note": "Redacted public record: identifiers and host coordinates are substituted consistently; raw observations remain private. Example IDs must not be used for routing."
+}

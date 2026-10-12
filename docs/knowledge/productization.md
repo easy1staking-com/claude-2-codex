@@ -100,3 +100,16 @@ inspection found the first submitted text as a user response item timestamped
 actual receipt and private queue snapshots. One-item-per-idle behavior and FIFO
 by queue order remain hypotheses; multiple queued messages may wait behind
 earlier items without any delivery deadline.
+
+## Second queued item observed — approximately 22:40 UTC
+
+VERIFIED: after Codex ended the next turn, Claude’s second older submission
+arrived as user input. Its ownership/visibility/split questions were already
+settled; Codex did not reopen the plan. A read-only native queue recheck found
+zero pending items for the selected thread and neither original ID remaining.
+Both submissions have now been actually read, at separate idle points.
+
+This sample is consistent with one item consumed per idle point in queue order,
+but two messages do not establish a universal consumer algorithm or a timing
+guarantee. Other frontend/consumer configurations and native pending approvals
+remain unmeasured. Notified the selected Claude once, with no reply requested.

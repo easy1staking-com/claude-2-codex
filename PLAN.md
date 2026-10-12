@@ -22,7 +22,7 @@ user tool approval. Prefer bounded exchanges with explicit artifacts and outcome
 | Wheel, bundled executable, CI, user documentation | Codex | Claude | Verified locally and in CI; alpha download published |
 | Selected-pair live round trip / private inbox | Both | Recipient observations recorded separately | Verified |
 | Native pending approval / short-lived-client disconnect | Both | Native frontend observation, beyond fixtures | Open; bounded experiment still required |
-| Native idle queue observation | Both | Actual Codex receipt plus read-only queue transition | Verified first item after turn ended; second still pending at 22:37 |
+| Native idle queue observation | Both | Actual Codex receipt plus read-only queue transition | Both original items observed across separate idle points; zero pending on recheck |
 | Final stable-release decision | Both | Native permission behavior and reviewed evidence | Open pending native approval/disconnect experiment |
 
 ## File ownership for concurrent work

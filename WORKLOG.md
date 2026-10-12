@@ -143,3 +143,14 @@
 - Claude independently corroborated the rollout user item (22:37:19.849 UTC)
   and remaining second row at 22:38. Recorded its timestamp as attributed
   evidence, without asserting general one-item-per-idle or FIFO behavior.
+
+## 2026-10-12 — second native queue observation
+
+- The second older Claude submission arrived after the next Codex turn ended.
+  Its ownership/split questions were stale; preserved the already accepted plan.
+- A read-only recheck around 22:40 UTC confirmed zero selected-thread queue
+  items and both original IDs consumed. Actual agent receipt is recorded for
+  both items, across separate idle points. Recorded limited scope without
+  inferring a general FIFO, timing or wake-up guarantee.
+- Notified only the selected Claude; no reply requested. No source code changes
+  or permission changes. Native pending-approval/disconnect gate remains open.

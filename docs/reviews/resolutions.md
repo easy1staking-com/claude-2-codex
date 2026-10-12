@@ -68,3 +68,11 @@ its previous turn ended. Read-only before/after snapshots corroborate the
 matching first row’s consumption; the second was still pending. This satisfies
 the selected-session queue observation gate, not a deadline, ordering or
 daemon-only consumer guarantee. Pending-approval behavior is still unverified.
+
+### Second idle observation — approximately 22:40 UTC
+
+The second older submission also actually reached Codex after its next turn
+ended. Read-only queue inspection found zero selected-thread pending items and
+both original rows consumed. Both messages were observed across separate idle
+points. This corroborates the selected-session gate without proving a general
+consumer algorithm. The native pending-approval gate remains open.

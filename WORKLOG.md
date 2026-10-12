@@ -107,3 +107,22 @@
   and a pending-approval/disconnect experiment. Claude reports the older queued
   items still pending at 22:23 while this turn stays busy. End this turn before
   measuring idle consumption; stale queued questions are not new requirements.
+
+## 2026-10-12 — alpha publication and remaining live gates
+
+- Pushed credited integration commit `844b147`. CI run `38317428697` passed
+  Python 3.11, Python 3.14 and standalone jobs. CI skips only the parser probe
+  requiring an installed native Codex CLI; the host run exercised that probe.
+- Downloaded CI artifacts for that exact commit. Verified the release wheel’s
+  eight package files against reviewed source, installed it cleanly, and ran
+  all 91 regressions from outside the checkout. The exact release executable
+  passed version and native discovery with both selected peers present.
+- Published prerelease `v0.1.0a1` with the CI Linux x86_64 executable, wheel,
+  complete source archive and SHA256SUMS. The local glibc 2.43 binary was not
+  uploaded. Assets are tied to the tested integration commit, not later docs.
+- Read-only native queue inspection before ending this turn confirmed two
+  selected-thread pending items (orders 0 and 1); no bodies or raw IDs published.
+  Queue storage is observed; recipient consumption remains unobserved.
+- Stable release remains gated on actual idle queue observation and the native
+  pending-approval/disconnect test. The current turn must end to create the
+  idle point; the older queued questions are already resolved and remain stale.

@@ -4,7 +4,7 @@ Discover existing coding-agent sessions and send explicit messages between Claud
 Code and Codex. Both agents use the same Python API or `agent-bridge` CLI. Agents
 stay in their existing sessions and retain their permission settings.
 
-**Current build: 0.1.0a1.** Local Linux transports are supported; this project
+**Current build: [0.1.0a1 alpha](https://github.com/easy1staking-com/claude-2-codex/releases/tag/v0.1.0a1).** Local Linux transports are supported; this project
 bridges agent products. Windows, macOS, remote hosts, and production-grade delivery
 guarantees are not certified. Reviews and live evidence are recorded rather than
 implied by passing unit tests.

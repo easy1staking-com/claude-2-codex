@@ -19,8 +19,9 @@ user tool approval. Prefer bounded exchanges with explicit artifacts and outcome
 | First and second design/implementation attack | Claude | Codex evaluates findings and remedies | Two passes completed; dispositions recorded; native gates open |
 | Negative-case regression suite | Claude | Codex | Accepted: 56 independent cases, no expected failures |
 | Public facade, symmetric CLI, SQLite outcomes, private inbox | Codex | Claude | 91 combined regression tests passing |
-| Wheel, bundled executable, CI, user documentation | Codex | Claude | Local wheel and executable verified; CI publication in progress |
+| Wheel, bundled executable, CI, user documentation | Codex | Claude | Verified locally and in CI; alpha download published |
 | Selected-pair live round trip / private inbox | Both | Recipient observations recorded separately | Verified |
+| Native pending approval / short-lived-client disconnect | Both | Native frontend observation, beyond fixtures | Open; bounded experiment still required |
 | Native idle queue drain and final stable-release decision | Both | Codex records observed receipt; Claude challenges evidence | Open; current turn must end before idle observation |
 
 ## File ownership for concurrent work

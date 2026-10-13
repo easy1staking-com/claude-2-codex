@@ -65,3 +65,14 @@ The published Linux executable came from Ubuntu 22.04 CI. The local `dist/`
 binary used glibc 2.43. Both bundle Python and still require system libraries and
 native agent CLIs. Do not infer a static binary from the ELF bootloader's symbol
 floor; the bundled interpreter and extensions also matter.
+
+## Published Git-reference check
+
+VERIFIED by Codex after publishing commit `46c1d60`: Claude’s one-step plugin
+install with marketplace reference `easy1staking-com/claude-2-codex` succeeded
+in a temporary CLAUDE_CONFIG_DIR. Cached skill bytes matched the reviewed
+Claude package. Content hashes and mtimes of real Claude settings and Codex
+configuration were unchanged before/after. Private proof retains the temporary
+cache path and native command output. No new model session was started.
+Codex Git-source installation remains unverified; native read/list parsing
+and Claude’s independent local install are the separate evidence available.

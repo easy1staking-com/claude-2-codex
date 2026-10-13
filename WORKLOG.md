@@ -185,3 +185,14 @@
 - Asked the operator whether a manual approval prompt can be held. Automatic
   review is not that test; no policy changed and no prompt was answered. Fresh
   isolated idle nonce awaits a bounded ready-and-end instruction to Claude.
+
+### Published marketplace verification
+
+- Pushed credited plugin integration `46c1d60`; CI run `38368445439` passed.
+- Codex then tested Claude’s Git-reference install in temporary CLAUDE_CONFIG_DIR:
+  install succeeded, cached skill matched reviewed bytes, and hashes/mtimes of
+  real Claude/Codex settings were unchanged. No active user configuration changed.
+- Recorded that first-hand result separately from Claude’s local-path tests.
+  Codex Git install and live model skill invocation remain unmeasured.
+- Prepared an isolated idle nonce with zero queue items before arming; root
+  will end its turn before sender checks idle state and sends once.

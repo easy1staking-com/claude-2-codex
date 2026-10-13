@@ -175,8 +175,10 @@ codex plugin add agent-bridge@easy1staking-agent-bridge-codex
 Start a new agent session after installation. Use distinct provider catalog
 selectors; a missing expected catalog should fail rather than install the other
 provider’s skill. Local-path installation was independently tested by Claude
-in temporary config directories; Git-reference install and skill invocation in
-a new live model session still need their own confirmation. Native Codex
+in temporary config directories. Codex verified Claude’s Git-reference install
+in a temporary Claude config directory with matching cached skill bytes and
+unchanged real settings. Codex Git-reference installation and skill invocation
+in a new live model session still need their own confirmation. Native Codex
 `plugin/read` and `plugin/list` parsed the exact local package without installation.
 
 The existing [Claude skill](integrations/claude/SKILL.md) and

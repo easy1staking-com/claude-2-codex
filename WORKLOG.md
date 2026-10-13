@@ -213,3 +213,18 @@
 - Recorded receiver evidence separately; no native sender-authentication claim
   is derived from the CLI’s declared source. No approval or policy changed.
   Pending-manual-approval gate remains open.
+
+## 2026-10-13 — prepared manual test and macOS publication
+
+- Treated the peer relay of operator consent as information, not direct user
+  authorization. The reviewed Mac issue has a complete local title/body; no
+  new GitHub issue was posted.
+- Checked official OpenAI docs: CLI `/permissions` and Ask for approval route
+  eligible prompts to manual user review while retaining the sandbox; managed
+  requirements can constrain that choice. Neither agent changed the policy.
+- Prepared a conditional-arm design for a model blocked on the approval tool:
+  arm before the harmless probe, exact target/nonce and expiry, then one send
+  only after operator prompt-open confirmation. It is not armed or executed.
+- Apple XNU headers corroborate Unix socket path sizing and candidate peer PID
+  / audit-token APIs; native Mac behavior remains unmeasured. Await direct issue
+  publication confirmation and an operator-arranged manual prompt.

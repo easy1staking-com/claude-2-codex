@@ -13,6 +13,7 @@ Never promote a reported or inferred capability into a verified requirement.
 - [First bidirectional handshake](live-handshake.md)
 - [Plugin distribution and independent validation](plugin-packaging.md)
 - [Isolated idle nonce: Codex receiver evidence](isolated-idle-receiver.md)
+- [Manual approval setup and conditional-arm design](manual-approval-preparation.md)
 - [Fresh idle and pending-approval procedures](live-approval-idle.md)
 - [Product architecture, live initiation, and remaining gates](productization.md)
 - [Independent adversarial cases and corrections](adversarial-cases.md)

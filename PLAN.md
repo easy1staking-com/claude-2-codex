@@ -70,7 +70,7 @@ future catalog precedence from choosing the wrong skill.
 
 | Follow-up | Status |
 |---|---|
-| Fresh idle pickup | Sender procedure agreed; waiting for ready-and-end nonce |
+| Fresh idle pickup | Isolated queued nonce observed by Codex; sender/receiver evidence recorded |
 | Pending manual approval | Prepared; requires an actual operator-held prompt, not automatic review |
 | macOS | Reviewed issue draft; native hardware and identity evidence required |
 | Executable dependencies | Existing Ubuntu22.04 release baseline retained; Python bundled, native CLIs still required |

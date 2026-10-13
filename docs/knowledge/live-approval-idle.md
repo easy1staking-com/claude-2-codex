@@ -49,7 +49,8 @@ Do not send until Codex sends a bounded ready message.
    contents), polls for at most 120 s, and proceeds only once the latest turn
    has completed. If the thread is not idle within 120 s, abort and report. Do
    not send.
-2. Claude records the enqueue time (UTC, immediately before the call), then
+2. Claude records the pre-send invocation time (UTC, immediately before the
+   call; the actual enqueue time is not observable to the sender), then
    sends exactly one message with the body `IDLE-NONCE <random 128-bit
    hex>`. Claude records the receipt fields: status, method, queue ID, UTC. The
    receipt **must** say `method: codex/queue`. If it says `turn/steer` instead
@@ -60,6 +61,35 @@ Do not send until Codex sends a bounded ready message.
 4. Claude reads the `queued_items` count once, read-only.
 5. No reply loop: Codex acknowledges once, in the same turn the nonce
    started.
+
+## Run A: isolated idle nonce (2026-10-13)
+
+The sender evidence below was recorded by Claude. Codex records the model
+receipt on its side. Times are UTC, taken from command output and the rollout.
+
+| Step | Value |
+|---|---|
+| Ready-and-end received | Codex message carrying the nonce body; Codex ended its turn after sending it |
+| Queue baseline (read-only) | 0 items in total, 0 for the selected thread |
+| Bounded idle check | Latest-turn metadata only (`limit 1`, `desc`, `itemsView notLoaded`), with a 120 s budget. It reported `completed` at 08:23:57Z on the first poll. |
+| Rollout `task_complete` (previous turn) | 08:23:57.076Z |
+| Pre-send UTC (immediately before invoking `send`) | 08:23:57.967Z |
+| Body | `IDLE-NONCE 0c3efbd6c1e9d9b0dac4d1cde15a1bc8` (sent once) |
+| Receipt | `status: queued`, `method: codex/queue`, bridge message ID and native queue item ID present, `journal_error: null`, logged 08:23:58.285Z |
+| CLI returned | 08:23:58.313Z |
+| Rollout `task_started` (new turn) | 08:23:58.267Z |
+| Nonce in rollout | 08:23:58.314Z, `role=user`, bridge envelope |
+| Queue after (read once, 08:24:03Z) | 0 items |
+| Other rollout input | No `role=user` item between `task_complete` and the nonce |
+| Operator interaction | Not observed by Claude. Claude cannot see the TUI. Only the rollout's absence of other input is reported. |
+
+What this shows: an idle thread with the TUI attached, as Codex reported,
+consumed one queued item and started a new turn with it. The method was
+`codex/queue`, so there was no routing race. Unlike I-0, the pre-send
+invocation timestamp gives a usable interval. From pre-send invocation to
+`task_started` was 300 ms. This is a same-host UTC sample. It is not a
+guaranteed pickup bound, and the actual enqueue time was not recorded. It says nothing about a thread with no TUI attached, or one
+showing a modal.
 
 ## Procedure B: message during a pending manual approval (needs Giovanni)
 
@@ -89,5 +119,5 @@ caused by the bridge is a **release blocker** (P2-M5).
 | Run | Date/UTC | Receipt | Observed | Verdict |
 |---|---|---|---|---|
 | I-0 | 2026-10-13 08:01:51 | queued, codex/queue | rollout 08:01:51.162Z, TUI attached | supports idle pickup; latency unknown; not isolated |
-| A | pending | | | |
+| A | 2026-10-13 08:23:57.967 (pre-send) | queued, codex/queue | rollout task_started 08:23:58.267Z, nonce 08:23:58.314Z; queue 0 after | actual model observation confirmed by Codex (exact nonce, one matching user item); 300 ms pre-send-invocation to task_started, one sample |
 | B | pending | | | |

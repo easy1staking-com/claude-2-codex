@@ -12,6 +12,7 @@ Never promote a reported or inferred capability into a verified requirement.
 - [Session discovery and native messaging](session-discovery.md)
 - [First bidirectional handshake](live-handshake.md)
 - [Plugin distribution and independent validation](plugin-packaging.md)
+- [Isolated idle nonce: Codex receiver evidence](isolated-idle-receiver.md)
 - [Fresh idle and pending-approval procedures](live-approval-idle.md)
 - [Product architecture, live initiation, and remaining gates](productization.md)
 - [Independent adversarial cases and corrections](adversarial-cases.md)

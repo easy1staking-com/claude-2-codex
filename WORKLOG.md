@@ -196,3 +196,20 @@
   Codex Git install and live model skill invocation remain unmeasured.
 - Prepared an isolated idle nonce with zero queue items before arming; root
   will end its turn before sender checks idle state and sends once.
+
+## 2026-10-13 — isolated idle nonce observation
+
+- Prepared zero-queue baseline and private random challenge, sent bounded
+  ready-and-end, then ended the previous turn. Claude polled only turn metadata
+  and reports one `codex/queue` submission.
+- This Codex model actually received the matching nonce with matching ready
+  correlation. Own rollout inspection: previous completion 08:23:57.076 UTC,
+  new turn 08:23:58.267 UTC, matching user item 08:23:58.314 UTC, no intervening
+  user item. Queue recheck 08:24:34 UTC found zero selected-thread items.
+- Sent the single agreed acknowledgment. Separated sender receipts from actual
+  receiver observation, UTC sample timing from guarantees, and rollout absence
+  from human/UI attestation. Corrected "enqueue time" to pre-send invocation
+  time; actual enqueue timestamp is absent.
+- Recorded receiver evidence separately; no native sender-authentication claim
+  is derived from the CLI’s declared source. No approval or policy changed.
+  Pending-manual-approval gate remains open.

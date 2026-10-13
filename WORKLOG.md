@@ -242,3 +242,6 @@
 - Did not infer who resolved the request, manual-prompt preservation, or a
   bridge defect. Actual held-prompt evidence and direct issue confirmation are
   still pending.
+- Claude recorded its non-send and corrected the probe outcome attribution
+  after Codex review. Its operator-reported MCP permission prompt is separate
+  from Codex-observed probe behavior and does not qualify as Procedure B.

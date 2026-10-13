@@ -120,4 +120,5 @@ caused by the bridge is a **release blocker** (P2-M5).
 |---|---|---|---|---|
 | I-0 | 2026-10-13 08:01:51 | queued, codex/queue | rollout 08:01:51.162Z, TUI attached | supports idle pickup; latency unknown; not isolated |
 | A | 2026-10-13 08:23:57.967 (pre-send) | queued, codex/queue | rollout task_started 08:23:58.267Z, nonce 08:23:58.314Z; queue 0 after | actual model observation confirmed by Codex (exact nonce, one matching user item); 300 ms pre-send-invocation to task_started, one sample |
+| B-1 | 2026-10-13 09:03–09:05 (arm window) | none: no nonce sent | Codex reports the probe completed without qualifying held-prompt evidence; execution instructions still specified auto_review. Operator-reported, relayed by Claude and not observed by Codex: the only prompt the operator saw was a `codex_tui` MCP tool-permission prompt for `send_message_to_thread`, not the probe. | VOID; arm cancelled by Codex; not evidence either way |
 | B | pending | | | |

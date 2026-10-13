@@ -16,14 +16,14 @@ user tool approval. Prefer bounded exchanges with explicit artifacts and outcome
 |---|---|---|---|
 | Public repository, privacy boundary, initial push | Codex | Claude | Published; residual public metadata corrected |
 | Product contract and native transport implementation | Codex | Claude | Implemented; two passes and independent regressions accepted |
-| First and second design/implementation attack | Claude | Codex evaluates findings and remedies | Two passes completed; dispositions recorded; native gates open |
+| First and second design/implementation attack | Claude | Codex evaluates findings and remedies | Two passes completed; dispositions recorded; selected-session native gates measured; stable release review open |
 | Negative-case regression suite | Claude | Codex | Accepted: 56 independent cases, no expected failures |
 | Public facade, symmetric CLI, SQLite outcomes, private inbox | Codex | Claude | 91 combined regression tests passing |
 | Wheel, bundled executable, CI, user documentation | Codex | Claude | Verified locally and in CI; alpha download published |
 | Selected-pair live round trip / private inbox | Both | Recipient observations recorded separately | Verified |
-| Native pending approval / short-lived-client disconnect | Both | Native frontend observation, beyond fixtures | Open; bounded experiment still required |
+| Native pending approval / short-lived-client disconnect | Both | Native frontend observation, beyond fixtures | Held-manual-approval sample passed with operator attestations relayed by Claude and exact-once receiver evidence; active-turn abrupt disconnect D-1 passed; held-approval D-2 sample passed with relayed operator attestations and receiver evidence (old transport; a2 approval/disconnect unmeasured) |
 | Native idle queue observation | Both | Actual Codex receipt plus read-only queue transition | Both original items observed across separate idle points; zero pending on recheck |
-| Final stable-release decision | Both | Native permission behavior and reviewed evidence | Open pending native approval/disconnect experiment |
+| Final stable-release decision | Both | Native permission behavior and reviewed evidence | Open pending consolidated evidence review and release-artifact checks |
 
 ## File ownership for concurrent work
 
@@ -56,7 +56,9 @@ Codex may commit/push the integrated tree, as authorized. Commit messages and
 `CONTRIBUTORS.md` name each agent's actual contribution; do not invent a human
 identity or imply agent output approves release. Publish an alpha while gates
 remain open. A stable version needs clean artifact checks, no unresolved high
-defects within claimed support, and the remaining native pending-approval experiment.
+defects within claimed support, and reviewed selected-session native approval/disconnect evidence.
+B-2, D-1 and D-2 samples have passed; they do not certify every frontend or
+replace checks on the final release artifacts.
 
 ## Follow-up ownership — 2026-10-13
 
@@ -71,7 +73,20 @@ future catalog precedence from choosing the wrong skill.
 | Follow-up | Status |
 |---|---|
 | Fresh idle pickup | Isolated queued nonce observed by Codex; sender/receiver evidence recorded |
-| Pending manual approval | Prepared; requires an actual operator-held prompt, not automatic review |
-| macOS | Reviewed issue draft; native hardware and identity evidence required |
+| Pending manual approval | B-2 held-prompt sample passed; sender/operator and receiver evidence recorded separately; active-turn abrupt disconnect D-1 passed; held-approval D-2 sample passed with relayed operator attestations and receiver evidence (old transport; a2 approval/disconnect unmeasured) |
+| macOS | Reviewed proposal published as issue #1; native hardware and identity evidence required |
 | Executable dependencies | Existing Ubuntu22.04 release baseline retained; Python bundled, native CLIs still required |
 | Plugin marketplaces | Both packages validated locally; no global configuration changed; publication checks added |
+
+## Feedback alpha wrap-up — 2026-10-13
+
+Keep the current single-binary distribution and defer C/Go/Rust migration until
+feedback arrives. v0.1.0a2 removes third-party runtime packages and uses the
+standard-library transport. Codex owns source, packaging, user documentation and
+local artifact verification; Claude owns independent protocol fixtures/tests and
+final publication after the reviewed READY handoff. No concurrent staging.
+
+Original B-2/D-1/D-2 evidence predates this transport change. Approval/disconnect
+recertification on the new transport remains open for stable release. The a2
+alpha needs reviewed transport tests, clean wheel import/CLI/tests, an addressed
+artifact nonce observed by both agents, green CI and checked release assets.

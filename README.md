@@ -4,14 +4,31 @@ Discover existing coding-agent sessions and send explicit messages between Claud
 Code and Codex. Both agents use the same Python API or `agent-bridge` CLI. Agents
 stay in their existing sessions and retain their permission settings.
 
-**Current build: [0.1.0a1 alpha](https://github.com/easy1staking-com/claude-2-codex/releases/tag/v0.1.0a1).** Local Linux transports are supported; this project
+**Current build: [0.1.0a2 alpha](https://github.com/easy1staking-com/claude-2-codex/releases/tag/v0.1.0a2).** Local Linux transports are supported; this project
 bridges agent products. Windows, macOS, remote hosts, and production-grade delivery
 guarantees are not certified. Reviews and live evidence are recorded rather than
 implied by passing unit tests.
 
 ## Install
 
-Requires Python 3.11+ and installed, authenticated Claude/Codex CLIs:
+Download [agent-bridge-linux-x86_64](https://github.com/easy1staking-com/claude-2-codex/releases/download/v0.1.0a2/agent-bridge-linux-x86_64)
+and [SHA256SUMS](https://github.com/easy1staking-com/claude-2-codex/releases/download/v0.1.0a2/SHA256SUMS) from the release into the same directory. Then:
+
+```bash
+sha256sum --ignore-missing --check SHA256SUMS
+chmod +x agent-bridge-linux-x86_64
+./agent-bridge-linux-x86_64 --version
+./agent-bridge-linux-x86_64 peers
+```
+
+The executable includes Python; no Python or pip installation is needed. Linux
+system libraries must be compatible with the Ubuntu 22.04 build baseline. Install
+and authenticate the native Claude/Codex CLIs for the agent products you use.
+Run the executable by absolute path or place it on PATH as `agent-bridge`.
+
+The library uses only Python's standard library, with zero third-party runtime
+packages. It is an independent leaf library that other projects can adopt. To
+use the library or CLI from Python 3.11+:
 
 ```bash
 python3 -m venv .venv
@@ -19,11 +36,11 @@ python3 -m venv .venv
 .venv/bin/agent-bridge --help
 ```
 
-Install a downloaded wheel in any environment, or use `pipx install
-'git+https://github.com/easy1staking-com/claude-2-codex.git'` for an isolated CLI.
-This package has not been published to PyPI. A bundled Linux executable is built
-by CI and can also be built locally (see below); it includes Python and requires
-compatible Linux system libraries plus the agent CLIs.
+An isolated CLI installation is also available with `pipx install
+'git+https://github.com/easy1staking-com/claude-2-codex.git'`. This package is not
+on PyPI. Build and development tools are optional and do not ship as runtime
+requirements. macOS and a future native-language implementation remain follow-up
+work; this release provides the existing bundled Linux executable.
 
 ## Discover and communicate from either agent
 
@@ -141,6 +158,7 @@ internals are experimental; the public API is `Bridge` and its exported values.
 python3 scripts/verify_evidence.py
 python3 scripts/check_publication.py
 python3 scripts/check_plugins.py
+python3 scripts/check_dependencies.py
 .venv/bin/python -m build
 python3 scripts/verify_wheel.py dist/*.whl
 .venv/bin/pyinstaller --onefile --name agent-bridge --paths src --specpath build scripts/standalone_entry.py
@@ -194,3 +212,10 @@ The [spec](SPEC.md), [knowledge base](docs/knowledge/README.md),
 [adversarial reviews](docs/reviews/), and [work log](WORKLOG.md) describe guarantees,
 findings, and remaining release gates. Public historical captures use substituted
 identifiers; private raw captures remain outside Git.
+
+## Feedback
+
+Report bugs or installation problems in [GitHub issues](https://github.com/easy1staking-com/claude-2-codex/issues).
+Include the bridge/agent versions, OS, command, receipt status and expected
+behavior. Remove tokens, message bodies, private paths and session IDs from
+public reports. This alpha is intended for hands-on feedback.

@@ -114,6 +114,63 @@ Pass condition: the prompt stays pending and unanswered until Giovanni acts,
 and the nonce is delivered exactly once. Any automatic decline or approval
 caused by the bridge is a **release blocker** (P2-M5).
 
+## Disconnect runs (2026-10-13)
+
+The harness is Claude-owned and lives in the session scratchpad, not the repo;
+Codex reviewed it before arming. It uses the production `Bridge.send` and
+`CodexClient.call`. A `ws.send` proxy SIGKILLs the sender process right after
+the real `turn/steer` write returns, before the application-level `recv`. Every
+`turns/list` result is gated on the armed thread and turn, and the queue path
+fails closed. These runs used the `websockets` 17.1 client, which the stdlib
+`UnixWebSocket` replaced afterwards, so they must be repeated for the new
+transport. The boundary is the end of `ws.send`. The websockets reader may
+already have buffered a response, so this does not claim that no transport
+read happened. Offline guard checks against the fake app-server: write-kill
+gave 1 steer and an abrupt close with no close frame; idle and turn-mismatch
+were refused with 0 steers; kill-before-write gave 0 steers.
+
+**D-1, abrupt disconnect while the turn is active and no approval is pending.**
+- Armed by Codex, with an expected turn ID and an expiry of 10:11:09Z.
+- Harness and source SHA-256s matched the arm.
+- The bounded pre-check found the expected turn `inProgress` at 10:06:31Z.
+- One run: ACTIVE_OK 10:06:38.000382Z, PRE_WRITE .000461Z, WRITTEN .000499Z.
+- The child ended by SIGKILL (rc -9).
+- Fresh journal: `pending`, then `unknown` after `recover()`.
+- The Codex rollout has exactly one nonce user item, at 10:06:38.221Z.
+- Not resent.
+
+Receiver record: [abrupt-disconnect-receiver.md](abrupt-disconnect-receiver.md).
+Codex verified one nonce user item, the busy command completing (exit 0), and
+the same turn still `inProgress` with app-server metadata responding at
+10:09:07Z. D-1 passes for this sample.
+
+**D-2, abrupt disconnect during a held manual approval.**
+- Armed by Codex, with an expected turn ID and an expiry of 10:36:03Z.
+- Trigger: Giovanni attested directly in Claude's session that the exact printf
+  probe prompt was open and unanswered.
+- Pre-checks at 10:22:25Z:
+  - harness and source SHA-256s matched the arm;
+  - the expected turn was `inProgress`;
+  - the rollout's last tool call was exactly `/usr/bin/printf
+    agent-bridge-manual-approval-probe` (10:22:16.305Z), with no output.
+- One run: ACTIVE_OK 10:22:37.571725Z, PRE_WRITE .571795Z, WRITTEN .571832Z.
+- The child ended by SIGKILL (rc -9).
+- Fresh journal: `pending`, then `unknown` after `recover()`.
+- At 10:22:40Z the rollout still showed the probe pending and no nonce.
+- Giovanni then attested that the prompt was still there and unanswered.
+- The rollout shows the probe completing (exit 0) at 10:23:20.220Z and exactly
+  one nonce user item at 10:23:20.224Z. The steer was held until the approval
+  resolved, as in B-2.
+- Not resent.
+
+The operator confirmed in Claude's session that they approved the probe
+themselves. **D-2 passes for this sample** on the sender and operator side:
+the prompt was preserved across an abrupt sender disconnect and decided only by
+the operator, and the nonce was delivered once, after the decision. Receiver
+record: [held-approval-disconnect-receiver.md](held-approval-disconnect-receiver.md).
+It also shows the same turn still `inProgress`, with app-server metadata
+responding, at 10:47:03Z.
+
 ## Results
 
 | Run | Date/UTC | Receipt | Observed | Verdict |
@@ -121,4 +178,6 @@ caused by the bridge is a **release blocker** (P2-M5).
 | I-0 | 2026-10-13 08:01:51 | queued, codex/queue | rollout 08:01:51.162Z, TUI attached | supports idle pickup; latency unknown; not isolated |
 | A | 2026-10-13 08:23:57.967 (pre-send) | queued, codex/queue | rollout task_started 08:23:58.267Z, nonce 08:23:58.314Z; queue 0 after | actual model observation confirmed by Codex (exact nonce, one matching user item); 300 ms pre-send-invocation to task_started, one sample |
 | B-1 | 2026-10-13 09:03–09:05 (arm window) | none: no nonce sent | Codex reports the probe completed without qualifying held-prompt evidence; execution instructions still specified auto_review. Operator-reported, relayed by Claude and not observed by Codex: the only prompt the operator saw was a `codex_tui` MCP tool-permission prompt for `send_message_to_thread`, not the probe. | VOID; arm cancelled by Codex; not evidence either way |
-| B | pending | | | |
+| B-2 | 2026-10-13 09:25:30.920Z (pre-send invocation) | rpc_accepted, turn/steer, logged 09:25:31.176Z, sent once | Target: the operator's own Codex session (ID superseded the earlier background thread, confirmed by discovery). Before send: latest turn `inProgress`; rollout shows the printf probe tool call at 09:25:16.871Z with no output, and the operator attested in Claude's session that the printf prompt was open and unanswered. At 09:25:35Z the rollout still showed no probe output and no nonce user item. | Operator attestation (relayed by Claude), after the send: the printf prompt was still there and unanswered. **No automatic approval or decline was caused by the bridge.** Rollout afterwards: probe output and the nonce user item both at 09:26:19.19Z, about 48 s after `rpc_accepted`. The steer was held while the approval was pending and became visible only after the prompt was resolved. Probe exit 0. The operator confirmed in Claude's session that they approved the prompt themselves. **PASS (sender and operator side):** the prompt was preserved and decided only by the operator; the nonce was delivered once, after the approval. Codex's receiver record is pending. |
+| D-1 | 2026-10-13 10:06:38.000Z (write) | none: sender SIGKILLed after the write; journal pending, then unknown | nonce delivered exactly once, rollout 10:06:38.221Z | PASS for this sample (sender and receiver; see abrupt-disconnect-receiver.md) |
+| D-2 | 2026-10-13 10:22:37.572Z (write) | none: sender SIGKILLed after the write; journal pending, then unknown | prompt still open after the disconnect (operator); nonce delivered once at 10:23:20.224Z, after the probe resolved | PASS for this sample (operator approved the probe themselves; see held-approval-disconnect-receiver.md) |

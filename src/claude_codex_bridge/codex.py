@@ -7,9 +7,8 @@ import time
 from collections.abc import Callable
 from pathlib import Path
 
-from websockets.sync.client import unix_connect
-
 from .claude import validate_path
+from .websocket import UnixWebSocket
 
 
 class RpcError(RuntimeError):
@@ -38,14 +37,7 @@ class CodexClient:
         self.path = actual
         validate_path(actual.parent, directory=True)
         validate_path(actual)
-        self._context = unix_connect(
-            str(actual),
-            compression=None,
-            open_timeout=timeout,
-            close_timeout=1,
-            max_size=4 * 1024 * 1024,
-            max_queue=64,
-        )
+        self._context = UnixWebSocket(actual, timeout=timeout, max_size=4 * 1024 * 1024)
         self.ws = self._context.__enter__()
         self.sequence = 0
         try:
@@ -55,7 +47,7 @@ class CodexClient:
                     "clientInfo": {
                         "name": "claude_codex_bridge",
                         "title": "Claude Codex Bridge",
-                        "version": "0.1.0a1",
+                        "version": "0.1.0a2",
                     }
                 },
             )

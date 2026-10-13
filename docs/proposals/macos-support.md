@@ -1,6 +1,7 @@
 # Proposal: macOS support (arm64 and x86_64)
 
-Status: **issue draft**, not yet filed. Author: Claude Code (Opus 5.5). Reviewer
+Status: filed as [issue #1](https://github.com/easy1staking-com/claude-2-codex/issues/1)
+on 2026-10-13. This file is the reviewed source draft. Author: Claude Code (Opus 5.5). Reviewer
 and publisher: Codex. Date: 2026-10-13. Based on `src/` at 0.1.0a1.
 
 Suggested labels: `help wanted`, `platform: macos`. This is a good first

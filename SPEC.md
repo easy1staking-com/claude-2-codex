@@ -1,10 +1,15 @@
 # Claude–Codex bridge product contract
 
-Status: 0.1.0a1 alpha contract; two adversarial passes completed. Stable release
-remains gated on native pending-approval behavior. Selected-session idle queue
-consumption has now been observed; other consumer configurations remain unmeasured.
+Status: 0.1.0a2 alpha contract; two adversarial passes completed. Stable release
+requires consolidated review and final artifact checks. Selected-session idle
+queue consumption and native approval/disconnect samples have been observed;
+other consumer/frontend configurations remain unmeasured.
 
 ## Purpose and scope
+
+An independent leaf library with zero third-party runtime packages. Other
+projects may adopt it; its implementation does not import their frameworks.
+The Linux executable bundles Python, so end users need no Python installation.
 
 Discover and explicitly address existing local Claude Code and Codex sessions
 from either agent or another program. Provide an installable Python library and
@@ -52,7 +57,11 @@ Discovery is distinct from socket availability and actual receipt.
 ## Transport and permission invariants
 
 Claude uses authenticated newline JSON peer protocol v1. Codex uses initialized
-JSON-RPC over WebSocket over Unix. Validate private socket/key ownership and
+JSON-RPC over WebSocket over Unix. The synchronous WebSocket client uses only
+the standard library, bounds headers to 16 KiB and messages to 4 MiB, validates
+the handshake and framing, masks client frames, supports fragmented UTF-8 text
+and ping/pong, and has total operation deadlines. No extensions, compression,
+subprotocol negotiation, background reader or reconnect is supported. Validate private socket/key ownership and
 process incarnation; bound frame sizes and connection time. Only the selected
 Claude process may inject messages into a paired inbox. Label relays honestly
 as bridge messages; never trust body-level sender claims. Do not write fake native
@@ -121,15 +130,25 @@ The original prototype's bidirectional handshake is verified on Claude Code
 2.1.296 and Codex 0.162.1, dated 2026-10-12. Public captures use substituted IDs.
 Further packaging and lifecycle behavior require their own tests. Selected-session native idle queue consumption was observed at 22:37 UTC after
 the active turn ended. That does not establish daemon-only wake-up, FIFO ordering
-or a delivery deadline. Pending-approval/disconnect behavior, native held/refused
-receipts, additional OSes, and other provider versions are not yet live-verified. Never market unmeasured paths as certified.
+or a delivery deadline. On 2026-10-13 the selected Linux sessions passed a held
+manual-approval sample (B-2), an active-turn abrupt sender-disconnect sample
+(D-1), and a held-approval abrupt sender-disconnect sample (D-2). Receiver
+records and separately attributed operator attestations are in `docs/knowledge/`;
+the disconnect harness exercised checkout source rather than the release binary.
+These approval/disconnect samples preceded the standard-library transport change;
+new-transport approval/disconnect acceptance remains unmeasured for a2.
+Other frontends, native Claude held/refused receipts, additional OSes and other
+provider versions remain unmeasured. Never market unmeasured paths as certified.
 
-## Language decision — 2026-10-12
+## Language and dependency decision — 2026-10-13
 
-Retain Python for v0.1: the adapters have live evidence, the standard library
-supplies sockets/SQLite, and there is one runtime dependency (`websockets`).
-Ship a typed library, wheel, CLI, and an optional bundled Linux executable.
-Rust would remove interpreter bundling and offer a native library, but rewriting
-verified adapters would expand compatibility work before delivery semantics
-are proven. Reconsider Rust against measured installation, startup, or runtime
-constraints. A bundled Python executable is not a static Rust binary.
+Retain the Python implementation and bundled executable for this feedback alpha.
+The implementation and tests use the standard library; `dependencies=[]` in the
+package metadata. Build/lint tooling is optional, used only by contributors.
+The single Linux executable includes Python and needs compatible system libraries
+and the native agent CLIs. Those CLIs supply the sessions being connected.
+
+Migration to C, Go or Rust is deferred until after user feedback. No rewrite has
+started. macOS Apple Silicon/Intel builds and native identity evidence remain
+future work, not certified platforms. Dated evidence from the original
+third-party WebSocket transport remains historical, not current dependencies.

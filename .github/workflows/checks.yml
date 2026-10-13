@@ -20,12 +20,14 @@ jobs:
       - run: python scripts/verify_evidence.py
       - run: python scripts/check_publication.py
       - run: python scripts/check_plugins.py
+      - run: python scripts/check_dependencies.py
       - run: python -m build
       - run: python scripts/verify_wheel.py dist/*.whl
+      - run: python scripts/check_dependencies.py --wheel dist/*.whl
       - name: Install and test the built wheel outside the checkout
         run: |
           python -m venv /tmp/wheel-check
-          /tmp/wheel-check/bin/pip install dist/*.whl
+          /tmp/wheel-check/bin/pip install --no-deps dist/*.whl
           cd /tmp
           /tmp/wheel-check/bin/agent-bridge --version
           /tmp/wheel-check/bin/python "$GITHUB_WORKSPACE/scripts/run_tests.py" --test-dir "$GITHUB_WORKSPACE/tests"

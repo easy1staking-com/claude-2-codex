@@ -14,8 +14,12 @@ Never promote a reported or inferred capability into a verified requirement.
 - [Plugin distribution and independent validation](plugin-packaging.md)
 - [Isolated idle nonce: Codex receiver evidence](isolated-idle-receiver.md)
 - [Manual approval setup and conditional-arm design](manual-approval-preparation.md)
+- [Held manual approval: Codex receiver evidence and limits](manual-approval-receiver.md)
+- [Abrupt active-turn disconnect: receiver evidence and limits](abrupt-disconnect-receiver.md)
+- [Held-approval abrupt disconnect: receiver evidence and limits](held-approval-disconnect-receiver.md)
 - [Fresh idle and pending-approval procedures](live-approval-idle.md)
 - [Product architecture, live initiation, and remaining gates](productization.md)
+- [Dependency-free feedback alpha and artifact evidence](zero-dependency-release.md)
 - [Independent adversarial cases and corrections](adversarial-cases.md)
 - [Claude's independent review and resulting open questions](claude-review.md)
 

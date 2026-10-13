@@ -245,3 +245,88 @@
 - Claude recorded its non-send and corrected the probe outcome attribution
   after Codex review. Its operator-reported MCP permission prompt is separate
   from Codex-observed probe behavior and does not qualify as Procedure B.
+
+## 2026-10-13 — held approval sample and macOS issue publication
+
+- Giovanni directly confirmed readiness in this Codex session after selecting
+  the project workspace. Native discovery confirmed its exact current ID and
+  the matching Claude peer. Superseded the earlier target and expired arm;
+  sent a fresh bounded single-send arm without changing any permissions.
+- Requested the exact harmless printf probe. Codex received the matching nonce;
+  own rollout contains one matching user item at 09:26:19.193 UTC. Native command
+  completion at 09:26:19.197 UTC records exit 0 and the expected marker.
+- Claude separately reports Giovanni attested that the printf prompt remained
+  open and unanswered before and after the send, then confirmed that Giovanni approved
+  it personally. Recorded PASS for this sample with that evidence origin explicit;
+  timestamps alone do not establish UI state or the deciding actor. Native
+  mid-steer disconnect remains untested and the stable-release gate stays open.
+- Preserved the unredacted receiver capture in ignored private evidence; added
+  docs/knowledge/manual-approval-receiver.md and linked it in the knowledge map.
+  Claude's concurrently edited sender record remains separately attributed.
+- Published the previously reviewed macOS proposal as issue #1 on direct user
+  authorization. Duplicate lookup found none; issue readback matched title/body.
+  Credited Claude's draft and Codex's review/publication; no macOS support claim.
+- Validation: publication-surface check passed (40 documents/captures), existing
+  redacted-evidence consistency checks passed, and git diff whitespace check
+  passed. These document checks do not add native runtime or disconnect coverage.
+
+## 2026-10-13 — active-turn abrupt disconnect D-1
+
+- Claude supplied a corrected scratch harness; Codex reviewed production-call
+  preservation, exact-turn gates and self-SIGKILL boundary, then independently
+  reproduced five local guard controls. Peer relays granted no user approval.
+- Sent a fresh one-send conditional arm through this repository's bin/bridge.
+  Held the selected turn busy for 120 seconds; received exactly one nonce user
+  item. Sender capture matched arm/code hashes, write marker and message ID;
+  child died by SIGKILL, journal pending recovered to unknown. No resend.
+- Busy command exited 0; fresh app-server metadata RPCs succeeded and identified
+  the same inProgress turn with no active flags. Recorded D-1 sample PASS in
+  abrupt-disconnect-receiver.md, crediting both agents' independent evidence.
+- D-2 remains unarmed and the held-approval disconnect release gate remains open.
+  Preserved other worker edits; no product source or permission changes.
+- Claude reviewed the receiver note against its independent sender capture:
+  no factual errors. Incorporated the practical consequence that unknown after
+  a sender crash can mean delivered; verify the recipient before manual resend.
+
+## 2026-10-13 — held-approval abrupt disconnect D-2
+
+- Sent a fresh conditional arm through this project's bin/bridge and requested
+  exactly the printf probe. Claude's operator record reports a real held prompt,
+  preserved after self-SIGKILL, and Giovanni's own subsequent approval. No peer
+  message granted approval; neither agent changed permissions or answered it.
+- Independently matched sender hashes, write marker, signal -9 and journal
+  pending -> unknown with exactly one nonce user item. Probe completed at
+  10:23:20.220 UTC; nonce item followed at .224. Timestamp order alone does not
+  establish UI state or the deciding actor.
+- A fresh metadata check at 10:47:03.763532 UTC found the same inProgress turn
+  and responding app-server. Recorded sample PASS with separate evidence origins
+  in held-approval-disconnect-receiver.md; credited Claude's harness and capture.
+- Updated SPEC/PLAN evidence status: selected-session approval/disconnect samples
+  measured; stable release still requires consolidated review and artifact checks.
+  No product-source changes, global configuration changes or automatic resend.
+- Claude's independent review accepted the D-2/SPEC/PLAN factual record.
+  Applied neutral wording and verified from the private B-2 arm and attempt
+  that B-2 used the earlier operator thread, while D-1/D-2 used the later one.
+  Clarified that scope in both receiver notes without exposing native IDs.
+
+## 2026-10-13 — dependency-free single-binary feedback alpha
+
+- User clarified the project must be independent and ready for feedback now.
+  Kept Python bundled in the executable; no native-language rewrite started.
+  Removed unrelated troubleshooting material from the public document surface.
+- Codex replaced the runtime WebSocket package with a bounded standard-library
+  client, removed runtime requirements, added source/wheel/CI dependency guards,
+  bumped the package to a2 and documented binary-first installation and feedback.
+- Claude contributed the independent stdlib server, 43 transport cases including
+  re-entry controls, fixture migration and adversarial source/packaging review.
+  134 tests passed under -S and against a clean installed wheel outside checkout.
+- Built a local wheel/sdist/executable, verified wheel bytes and dependency
+  metadata, smoke-tested CLI/import, and completed an addressed binary -> Claude
+  -> clean wheel -> Codex exchange with one correlated recipient observation.
+- Earlier approval/disconnect samples are qualified as old-transport evidence;
+  new-transport pending-approval certification remains open for stable release.
+  Local artifact hashes, checks, provenance and release handoff are recorded in
+  zero-dependency-release.md. Claude owns final integrated publication after READY.
+- Proven dependency guards on an isolated copy: clean baseline passes; a
+  declared runtime requirement, external import and wheel runtime requirement
+  each fail for the intended reason. The real checkout was never mutated.

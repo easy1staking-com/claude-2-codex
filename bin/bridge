@@ -7,7 +7,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parent.parent
 python = root / ".venv/bin/python"
 if not python.exists():
-    raise SystemExit("Create .venv and install requirements.txt first; see README.md")
+    raise SystemExit("Create .venv and install the project first; see README.md")
 environment = dict(os.environ)
 environment["PYTHONPATH"] = str(root / "src")
 os.execve(python, [str(python), "-m", "claude_codex_bridge", *sys.argv[1:]], environment)

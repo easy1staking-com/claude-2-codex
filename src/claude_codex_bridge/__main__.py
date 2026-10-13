@@ -261,7 +261,7 @@ def main() -> None:
     )
     parser.add_argument("--codex-socket", type=Path, default=default_socket())
     parser.add_argument("--state-dir", type=Path, default=default_state_dir())
-    parser.add_argument("--version", action="version", version="0.1.0a1")
+    parser.add_argument("--version", action="version", version="0.1.0a2")
     commands = parser.add_subparsers(dest="command", required=True)
     peers = commands.add_parser("peers", help="Normalized discovery; partial errors are explicit")
     peers.add_argument("--product", choices=("claude", "codex", "all"), default="all")

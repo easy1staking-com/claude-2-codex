@@ -23,7 +23,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from websockets.sync.server import unix_serve
+from ws_server import unix_serve
 
 from claude_codex_bridge import Address, Bridge, claude
 from claude_codex_bridge.__main__ import EventLog, _serve_locked, forward_frame, main

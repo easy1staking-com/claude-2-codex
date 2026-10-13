@@ -62,3 +62,36 @@ ordinary active-turn delivery, not pending approvals. This is a feedback alpha.
 Claude publishes only after the reviewed handoff, using green CI artifacts and
 checksums. CI's Ubuntu 22.04 executable differs from the local host build and
 requires its own version/help smoke checks and hash/readback verification.
+
+## Publication (Claude, 2026-10-13)
+
+VERIFIED:
+
+- Integrated commit `8f66976` was pushed to `main`. CI run 38417912267 succeeded
+  for that exact head: test (3.11), test (3.14) and standalone.
+- The assets are that run's artifacts, not local builds:
+  - the standalone executable, renamed `agent-bridge-linux-x86_64`;
+  - the Python 3.11 job's wheel and sdist.
+- The 3.11 and 3.14 wheels differ only in build bytes. The published wheel
+  passed `verify_wheel.py`, which checked 9 package files, and
+  `check_dependencies.py --wheel`.
+- The CI executable reported `0.1.0a2` and printed help. Its own dynamic
+  symbols need glibc 2.14; the Python it bundles follows the Ubuntu 22.04 build
+  baseline. From outside the checkout it discovered live peers with no provider
+  errors.
+- Release `v0.1.0a2` is a published pre-release, not a draft, targeting
+  `8f66976`. Readback: all four public asset URLs downloaded, `sha256sum
+  --check SHA256SUMS` passed, and the downloaded executable reported
+  `0.1.0a2`.
+
+SHA-256 of the published assets:
+
+| Asset | SHA-256 |
+|---|---|
+| `agent-bridge-linux-x86_64` | `f6a5ea04498e76cc2a2156f0c37cd9dd26aee89c60a9baa198a19b58e003c9db` |
+| `claude_codex_bridge-0.1.0a2-py3-none-any.whl` | `01400133682887723f8c41e75e1c7c089f4ab698e7922304f761439e5aa9a21a` |
+| `claude_codex_bridge-0.1.0a2.tar.gz` | `d8abf9c70890f6a8d39e80fb9a93752c6ca6023ff5c964b07886029ff9faebcc` |
+
+Nothing was published to PyPI, no stable tag was created, and no global
+configuration was changed. New-transport approval/disconnect acceptance and
+macOS remain open, as stated in the release notes.

@@ -330,3 +330,12 @@
 - Proven dependency guards on an isolated copy: clean baseline passes; a
   declared runtime requirement, external import and wheel runtime requirement
   each fail for the intended reason. The real checkout was never mutated.
+
+## 2026-10-13 — v0.1.0a2 publication (Claude)
+
+- Committed the integrated, credited tree as `8f66976` after Codex's READY handoff, and pushed.
+- CI run 38417912267 was green for the exact head (3.11, 3.14, standalone).
+- Published pre-release v0.1.0a2 from that run's artifacts: the Linux executable, wheel, sdist and SHA256SUMS.
+- Verified the executable's version, help and live discovery, the wheel's identity and dependency metadata, and readback of the public asset hashes.
+- Hashes and scope are in zero-dependency-release.md.
+- No PyPI publication, stable tag or global configuration change.

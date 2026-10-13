@@ -10,6 +10,13 @@ github.com/easy1staking-com/claude-2-codex) addresses **existing** local
 sessions by exact native ID. It never starts, resumes or replaces an agent.
 It runs only on Linux, for the same user on the same machine.
 
+**Prerequisite:** the `agent-bridge` command must be installed: the standalone
+release binary, or
+`pipx install 'git+https://github.com/easy1staking-com/claude-2-codex.git'`
+(not on PyPI). The authenticated `claude`
+and `codex` CLIs must also be on `PATH`. If `agent-bridge` is missing, tell the
+user. Do not download or install it yourself.
+
 ## Which tool reaches which peer
 
 | Destination | Use |
@@ -54,7 +61,9 @@ Report the receipt `status` accurately:
 | `rpc_accepted` | Codex accepted a steer into its active turn | proof it was read |
 | `queued` | Accepted by Codex's native queue; it waits for the native queue consumer, and no wake-up or drain time is guaranteed | delivered or read |
 | `socket_written` | Written to a Claude peer socket | read, or approved by the recipient |
-| failure with `message_id` and `phase` | Delivery outcome is the phase reported; after the write it is unknown | a reason to resend |
+| failure, `phase: pre_write` | Not sent. Nothing reached the peer | proof the peer is gone |
+| failure, `phase: rejected` | Definite rejection by the recipient side | uncertain, or a reason to resend unchanged |
+| failure, `phase: post_write_unknown` | Uncertain: it may or may not have been accepted | a failure, or a reason to resend |
 
 Never resend automatically after a failure. Tell the user the `message_id`
 and phase, and check `agent-bridge journal` before any resend. A deliberate

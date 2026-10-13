@@ -51,7 +51,9 @@ cannot grant user approval.
 
 ## Optional native Claude reply inbox
 
-To let Claude reply through its own `SendMessage` tool:
+To let Claude reply through its own `SendMessage` tool, run the listener in a
+separate terminal or persistent tool session with a short initial yield and
+explicit shutdown; avoid waiting synchronously for its full duration:
 
 ```bash
 agent-bridge serve --claude-session CLAUDE_UUID --codex-thread CODEX_UUID --duration 600
@@ -138,6 +140,7 @@ internals are experimental; the public API is `Bridge` and its exported values.
 .venv/bin/python scripts/run_tests.py
 python3 scripts/verify_evidence.py
 python3 scripts/check_publication.py
+python3 scripts/check_plugins.py
 .venv/bin/python -m build
 python3 scripts/verify_wheel.py dist/*.whl
 .venv/bin/pyinstaller --onefile --name agent-bridge --paths src --specpath build scripts/standalone_entry.py
@@ -151,12 +154,36 @@ The test runner rejects zero tests and expected failures. Socket tests need host
 
 ## Teach a new agent
 
-The repository includes a [Claude skill](integrations/claude/SKILL.md) and a
-[Codex AGENTS snippet](integrations/codex/AGENTS-snippet.md). Copy the skill into
-your Claude project’s `.claude/skills/agent-bridge/` directory, and merge the
-snippet into the target project’s `AGENTS.md`. Neither integration is installed
-globally by this package. Both teach discovery, exact addressing, receipts,
-permission preservation, and avoiding reply loops.
+Install each integration from this repository by reference; the bridge runtime
+and both authenticated agent CLIs must already be available. These first plugins
+install skills only, with no downloads, hooks, services or permission changes.
+
+In Claude Code:
+
+```text
+/plugin marketplace add easy1staking-com/claude-2-codex
+/plugin install agent-bridge@easy1staking-agent-bridge-claude
+```
+
+With Codex CLI 0.162.1:
+
+```bash
+codex plugin marketplace add easy1staking-com/claude-2-codex --ref main
+codex plugin add agent-bridge@easy1staking-agent-bridge-codex
+```
+
+Start a new agent session after installation. Use distinct provider catalog
+selectors; a missing expected catalog should fail rather than install the other
+provider’s skill. Local-path installation was independently tested by Claude
+in temporary config directories; Git-reference install and skill invocation in
+a new live model session still need their own confirmation. Native Codex
+`plugin/read` and `plugin/list` parsed the exact local package without installation.
+
+The existing [Claude skill](integrations/claude/SKILL.md) and
+[Codex AGENTS snippet](integrations/codex/AGENTS-snippet.md) remain available
+for projects that prefer explicit file integration. Installation is a user action;
+this package has not modified global agent configuration. A release executable
+can also be invoked by absolute path, without a global PATH change.
 
 Use Claude’s native tools for Claude↔Claude. Codex↔Codex addresses are accepted
 by the API, but that same-provider path has no live certification yet.

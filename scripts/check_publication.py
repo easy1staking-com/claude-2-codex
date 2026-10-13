@@ -10,6 +10,10 @@ public_files = [
     *root.glob("*.toml"),
     *(root / "docs").rglob("*.md"),
     *(root / "integrations").rglob("*.md"),
+    *(root / "plugins").rglob("*.md"),
+    *(root / "plugins").rglob("*.json"),
+    *(root / ".claude-plugin").glob("*.json"),
+    *(root / ".agents/plugins").glob("*.json"),
     *(root / "docs/evidence").glob("*.json"),
 ]
 prohibited = [
@@ -77,6 +81,8 @@ for path in public_files:
         if re.search(pattern, text):
             errors.append(f"{path.relative_to(root)}: private coordinate or credential pattern")
     if path.suffix == ".json":
+        json.loads(text)  # Also check syntax on public plugin manifests.
+    if path.parent == root / "docs/evidence" and path.suffix == ".json":
         data = json.loads(text)
         if "publication_note" not in data:
             errors.append(f"{path.name}: missing redaction notice")

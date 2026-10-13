@@ -5,3 +5,5 @@ recursive-include docs *.md *.json
 recursive-include scripts *.py
 recursive-include tests *.py
 recursive-include .github *.yml
+recursive-include plugins *.md *.json
+include .claude-plugin/marketplace.json .agents/plugins/marketplace.json

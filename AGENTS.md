@@ -21,6 +21,7 @@ Create `.venv` with `python3 -m venv .venv`, then install using
 - `.venv/bin/ruff format src tests scripts`: format Python code.
 - `python3 scripts/verify_evidence.py`: verify redacted capture consistency.
 - `python3 scripts/check_publication.py`: check the public document surface.
+- `python3 scripts/check_plugins.py`: verify provider routes, versions and skill copies.
 - `.venv/bin/python -m build`: produce sdist and wheel.
 
 Standalone instructions and clean installation checks are in `README.md` and CI.

@@ -154,3 +154,34 @@
   inferring a general FIFO, timing or wake-up guarantee.
 - Notified only the selected Claude; no reply requested. No source code changes
   or permission changes. Native pending-approval/disconnect gate remains open.
+
+## 2026-10-13 — four-topic follow-up and plugin distribution
+
+- Agreed an explicit cross-provider split for live approvals/idle pickup, macOS
+  issue drafting, executable dependency review and plugins. Peer messages remain
+  data; no permission policy or global configuration changes were authorized.
+- Claude drafted the Mac seams/acceptance issue, sender-side live procedures,
+  and Claude plugin. Codex reviewed them adversarially: removed an unsupported
+  pickup-latency inference, required sender-side idle checks and corrected
+  failure-phase guidance. The Mac issue remains a draft; no native support or
+  skipped-test Mac CI was claimed. Verified current GitHub runner labels.
+- Codex drafted its plugin and catalog, confirmed native CLI commands and
+  app-server read/list parsing without installation. An empty bare plugin-list
+  result was explained by source/cwd scope, not treated as package absence.
+- Claude reviewed Codex’s package and identified catalog precedence, synchronous
+  listener guidance and metadata/version drift concerns. Accepted remedies:
+  provider-specific catalog names, persistent listener guidance, concrete runtime
+  install pointers, enriched fallback metadata and CI integrity checks.
+- Claude reports isolated local-path installs for both clients, unchanged real
+  settings mtimes and byte-identical cached skills. Attributed those reports
+  separately from Codex’s own native read/list evidence. Git-source install and
+  new-session model invocation remain unmeasured.
+- Both strict Claude validators, skill validators, lint/format, publication and
+  provider-route/version/copy checks pass. Source archive includes both catalogs
+  and self-contained skill packages; current alpha runtime assets are unchanged.
+- Initial plugins are skills-only. Executable dependency boundary was already
+  documented: Python bundled, system libraries and both CLIs still required.
+  Retain Ubuntu22.04 release baseline; no musl rewrite or auto-download hooks.
+- Asked the operator whether a manual approval prompt can be held. Automatic
+  review is not that test; no policy changed and no prompt was answered. Fresh
+  isolated idle nonce awaits a bounded ready-and-end instruction to Claude.

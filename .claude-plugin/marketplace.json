@@ -1,0 +1,19 @@
+{
+  "name": "easy1staking-agent-bridge-claude",
+  "owner": {
+    "name": "EASY1 Staking",
+    "url": "https://github.com/easy1staking-com"
+  },
+  "metadata": {
+    "description": "Local discovery and messaging between existing Claude Code and Codex sessions."
+  },
+  "plugins": [
+    {
+      "name": "agent-bridge",
+      "source": "./plugins/claude-agent-bridge",
+      "description": "Teaches Claude Code to discover local Codex sessions and message them through the agent-bridge CLI.",
+      "category": "development",
+      "tags": ["codex", "multi-agent", "messaging"]
+    }
+  ]
+}

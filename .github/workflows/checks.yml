@@ -19,6 +19,7 @@ jobs:
       - run: python scripts/run_tests.py
       - run: python scripts/verify_evidence.py
       - run: python scripts/check_publication.py
+      - run: python scripts/check_plugins.py
       - run: python -m build
       - run: python scripts/verify_wheel.py dist/*.whl
       - name: Install and test the built wheel outside the checkout

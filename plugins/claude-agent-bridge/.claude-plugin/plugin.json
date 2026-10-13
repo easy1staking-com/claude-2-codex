@@ -1,0 +1,18 @@
+{
+  "name": "agent-bridge",
+  "version": "0.1.0-alpha.1",
+  "description": "Discover existing local Codex sessions and message them through the agent-bridge CLI. Claude-to-Claude stays on native messaging.",
+  "author": {
+    "name": "EASY1 Staking",
+    "url": "https://github.com/easy1staking-com"
+  },
+  "homepage": "https://github.com/easy1staking-com/claude-2-codex",
+  "repository": "https://github.com/easy1staking-com/claude-2-codex",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "multi-agent",
+    "messaging",
+    "unix-socket"
+  ]
+}

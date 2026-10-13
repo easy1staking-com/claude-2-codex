@@ -1,0 +1,11 @@
+{
+  "name": "agent-bridge",
+  "version": "0.1.0-alpha.1",
+  "description": "Discover and explicitly message existing local Claude Code sessions from Codex.",
+  "skills": "./skills/",
+  "author": {
+    "name": "EASY1 Staking"
+  },
+  "repository": "https://github.com/easy1staking-com/claude-2-codex",
+  "license": "MIT"
+}

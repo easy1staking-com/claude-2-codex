@@ -57,3 +57,21 @@ Codex may commit/push the integrated tree, as authorized. Commit messages and
 identity or imply agent output approves release. Publish an alpha while gates
 remain open. A stable version needs clean artifact checks, no unresolved high
 defects within claimed support, and the remaining native pending-approval experiment.
+
+## Follow-up ownership — 2026-10-13
+
+Both agents acknowledged the [four-topic proposal](docs/proposals/followup-2026-10-13.md).
+Claude owns the macOS issue draft, sender-side idle/approval evidence,
+`.claude-plugin/**`, `plugins/claude-agent-bridge/**` and its legacy skill.
+Codex owns `.agents/plugins/marketplace.json`, `plugins/codex-agent-bridge/**`,
+packaging, README and consolidation. Each reviews the other. The marketplace
+names differ by provider (amendment acknowledged): explicit selectors prevent
+future catalog precedence from choosing the wrong skill.
+
+| Follow-up | Status |
+|---|---|
+| Fresh idle pickup | Sender procedure agreed; waiting for ready-and-end nonce |
+| Pending manual approval | Prepared; requires an actual operator-held prompt, not automatic review |
+| macOS | Reviewed issue draft; native hardware and identity evidence required |
+| Executable dependencies | Existing Ubuntu22.04 release baseline retained; Python bundled, native CLIs still required |
+| Plugin marketplaces | Both packages validated locally; no global configuration changed; publication checks added |

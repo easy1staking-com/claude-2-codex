@@ -22,7 +22,9 @@ wait for a compatible native queue consumer; do not assume message order.
 On an error, preserve its message ID and phase, then inspect `agent-bridge journal`.
 Never blindly resend a `post_write_unknown` outcome or unfinished `pending` row.
 
-For native Claude `SendMessage` replies, start an explicit bounded pair:
+For native Claude `SendMessage` replies, start an explicit bounded pair in a
+separate terminal or a persistent tool session with a short initial yield and
+explicit shutdown. Avoid waiting synchronously for the full listener duration:
 
 ```bash
 agent-bridge serve --claude-session CLAUDE_UUID --codex-thread CODEX_UUID --duration 600

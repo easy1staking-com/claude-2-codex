@@ -49,3 +49,23 @@ Apple's [Unix socket definitions](https://github.com/apple-oss-distributions/xnu
 corroborate the proposed socket-size seam and peer PID/audit-token API names;
 native behavior and Claude's macOS incarnation format still require hardware
 measurements. No macOS support claim follows from checking headers.
+
+## Probe attempt: void, not native approval acceptance evidence
+
+A readiness statement arrived through another Codex thread’s delegation. Codex
+kept it as peer information and displayed a direct publication confirmation
+control. Read-only native config defaults omitted an explicit reviewer/policy;
+the selected thread was active with no waiting-approval flag. Defaults alone
+cannot establish this thread’s effective reviewer. Execution instructions still
+specified automatic approval review.
+
+Within the existing project-test scope, Codex sent a single conditional arm to
+Claude, then requested sandbox escalation for a harmless printf probe. The
+request only printed a marker; it did not change files or policy. The tool
+completed before Codex received any real held-prompt attestation or nonce.
+Codex voided the attempt and cancelled the arm, instructing Claude not to send.
+
+This does not prove which actor resolved the request or how bridge disconnect
+affects approvals. It is not a pass for Procedure B and is not a bridge bug.
+The manual-prompt observation and direct issue-publication confirmation remain
+pending. No issue was posted using delegated approval text.

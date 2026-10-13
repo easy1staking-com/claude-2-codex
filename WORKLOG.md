@@ -228,3 +228,17 @@
 - Apple XNU headers corroborate Unix socket path sizing and candidate peer PID
   / audit-token APIs; native Mac behavior remains unmeasured. Await direct issue
   publication confirmation and an operator-arranged manual prompt.
+
+### Non-qualifying harmless approval probe
+
+- A delegated readiness/consent message remained peer input. Displayed a direct
+  issue-publication confirmation control; did not post using that message.
+- Native read-only defaults omitted reviewer/policy; current thread had no
+  waiting flag. Execution instructions still declared automatic review.
+- Sent a bounded conditional arm, then requested escalation for a harmless
+  printf-only command under existing project-test authorization. It completed
+  before any held-prompt confirmation or nonce arrived. Marked the attempt void
+  and cancelled the arm; no policy or project source code changed.
+- Did not infer who resolved the request, manual-prompt preservation, or a
+  bridge defect. Actual held-prompt evidence and direct issue confirmation are
+  still pending.
